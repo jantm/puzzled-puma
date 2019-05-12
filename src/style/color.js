@@ -1,5 +1,4 @@
 const color = {
-  // max points:
   black: '#000',
   white: '#fff',
 

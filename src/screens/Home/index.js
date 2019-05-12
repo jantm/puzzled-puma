@@ -1,15 +1,33 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View, ScrollView, Button } from 'react-native';
+import MenuButton from './components/MenuButton';
 import homeStyle from './home.style';
 
-export default class Home extends React.Component<Props, State> {
-  static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Home',
-  });
+const Home = ({ navigation }) => {
+  const renderButtons = () => {
+    const { navigate } = navigation;
 
-  render() {
-    return (
-      <View style={homeStyle.container}></View>
-    );
+    return ([
+      <MenuButton
+        onPress={() => navigate('Morse')}
+        title="Morse"
+        style={homeStyle.menuButton}
+        key="1"
+      />,
+    ]);
   }
+
+  return (
+    <View style={homeStyle.container}>
+      <ScrollView contentContainerStyle={homeStyle.menuContainer}>
+        {renderButtons()}
+      </ScrollView>
+    </View>
+  );
 }
+
+Home.navigationOptions = ({ navigation }) => ({
+  headerTitle: 'Home',
+});
+
+export default Home;
