@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+
 /**
  * Sort array elements using an array
  * @param {Array} array Given array of elements

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import morseStyle from '../morse.style';
 import { INPUT_BUTTONS } from '../morse.constants';
 
 const { DASH, DOT } = INPUT_BUTTONS;
 
-const MorseInputButton = ({ onPress, title, type }) => {
-  let symbolStyle = [morseStyle.symbolStyle];
+const MorseInputButton = ({ onPress, type }) => {
+  const symbolStyle = [morseStyle.symbolStyle];
 
   switch (type) {
     case DOT:
@@ -16,20 +16,22 @@ const MorseInputButton = ({ onPress, title, type }) => {
     case DASH:
       symbolStyle.push(morseStyle.dashSymbol);
       break;
-    }
+    default:
+      break;
+  }
 
   return (
     <TouchableOpacity
       style={morseStyle.inputButton}
-      onPress={onPress}>
-      <Image style={symbolStyle}></Image>
+      onPress={onPress}
+    >
+      <Image style={symbolStyle} />
     </TouchableOpacity>
   );
-}
+};
 
 MorseInputButton.propTypes = {
   onPress: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 };
 

@@ -6,7 +6,8 @@ import homeStyle from '../home.style';
 const MenuButton = ({ onPress, title }) => (
   <TouchableOpacity
     style={homeStyle.menuButton}
-    onPress={onPress}>
+    onPress={onPress}
+  >
     <Text style={homeStyle.menuButtonText}>{title}</Text>
   </TouchableOpacity>
 );

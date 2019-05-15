@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import morseStyle from './morse.style';
 import MorseButtons from './components/MorseButtons';
 import MorseCurrent from './components/MorseCurrent';
 import MorseOutput from './components/MorseOutput';
 import { getMorseDictionary, signToLetter } from './morse.helpers';
-import lettersToMorse from './morse.data';
+import { lettersToMorse } from './morse.data';
 
 const morseDictionary = getMorseDictionary(lettersToMorse);
 
@@ -14,8 +14,8 @@ export default class Morse extends React.Component {
     title: 'Morse',
   };
 
-  constructor() {
-    super(...arguments);
+  constructor(props) {
+    super(props);
 
     this.state = {
       output: '', // decoded text
@@ -23,12 +23,12 @@ export default class Morse extends React.Component {
       currentLetter: '',
     };
 
-    this._confirm = this._confirm.bind(this);
-    this._undo = this._undo.bind(this);
-    this._onInputButtonPress = this._onInputButtonPress.bind(this);
+    this.onLetterConfirm = this.onLetterConfirm.bind(this);
+    this.onUndo = this.onUndo.bind(this);
+    this.onInputButtonPress = this.onInputButtonPress.bind(this);
   }
 
-  _confirm() {
+  onLetterConfirm() {
     let { currentMorse, currentLetter, output } = this.state;
 
     if (currentLetter.length) {
@@ -40,7 +40,7 @@ export default class Morse extends React.Component {
     }
   }
 
-  _undo() {
+  onUndo() {
     let { output, currentMorse, currentLetter } = this.state;
 
     if (currentMorse.length) {
@@ -53,7 +53,7 @@ export default class Morse extends React.Component {
     this.setState({ output, currentMorse, currentLetter });
   }
 
-  _onInputButtonPress(input) {
+  onInputButtonPress(input) {
     let { currentMorse, currentLetter } = this.state;
     currentMorse = `${currentMorse}${input}`;
 
@@ -75,12 +75,11 @@ export default class Morse extends React.Component {
           currentLetter={currentLetter}
         />
         <MorseButtons
-          onInput={this._onInputButtonPress}
-          onConfirm={this._confirm}
-          onUndo={this._undo}
+          onInput={this.onInputButtonPress}
+          onConfirm={this.onLetterConfirm}
+          onUndo={this.onUndo}
         />
       </View>
     );
   }
 }
-

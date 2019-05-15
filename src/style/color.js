@@ -3,11 +3,11 @@ const color = {
   white: '#fff',
 
   // grays:
-  alabaster:     '#fcfcfc',
-  alto:          '#dcdcdc',
+  alabaster: '#fcfcfc',
+  alto: '#dcdcdc',
   silverChalice: '#aaa',
-  gray:          '#888',
-  doveGray:      '#666',
+  gray: '#888',
+  doveGray: '#666',
 };
 
 export default color;

@@ -23,7 +23,7 @@ export default StyleSheet.create({
     width: '100%',
     height: controlsContainerHeight,
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   controlsRow: {
     width: '100%',

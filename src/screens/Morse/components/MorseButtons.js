@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, View, Text } from 'react-native';
+import { View } from 'react-native';
 import MorseControlButton from './MorseControlButton';
 import MorseInputButton from './MorseInputButton';
 import morseStyle from '../morse.style';
@@ -14,28 +14,30 @@ const MorseInputButtons = ({ onInput, onConfirm, onUndo }) => {
 
   const renderDashButton = () => (
     <MorseInputButton
-      title={DASH}
       type={DASH}
-      onPress={onDashPress} />
+      onPress={onDashPress}
+    />
   );
 
   const renderDotButton = () => (
     <MorseInputButton
-      title={DOT}
       type={DOT}
-      onPress={onDotPress} />
+      onPress={onDotPress}
+    />
   );
 
   const renderConfirmButton = () => (
     <MorseControlButton
       title="Ok"
-      onPress={onConfirm} />
+      onPress={onConfirm}
+    />
   );
 
   const renderUndoButton = () => (
     <MorseControlButton
       title="Undo"
-      onPress={onUndo} />
+      onPress={onUndo}
+    />
   );
 
   return (
@@ -50,7 +52,7 @@ const MorseInputButtons = ({ onInput, onConfirm, onUndo }) => {
       </View>
     </View>
   );
-}
+};
 
 MorseInputButtons.propTypes = {
   onInput: PropTypes.func.isRequired,

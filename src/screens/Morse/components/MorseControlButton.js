@@ -7,7 +7,8 @@ import morseStyle from '../morse.style';
 const MorseControlButton = ({ onPress, title }) => (
   <TouchableOpacity
     style={morseStyle.controlButton}
-    onPress={onPress}>
+    onPress={onPress}
+  >
     <Text style={morseStyle.confirmButtonText}>{title}</Text>
   </TouchableOpacity>
 );
