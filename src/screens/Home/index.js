@@ -15,6 +15,12 @@ const Home = ({ navigation }) => {
         style={homeStyle.menuButton}
         key="1"
       />,
+      <MenuButton
+        onPress={() => navigate('Semaphore')}
+        title="Semaphore"
+        style={homeStyle.menuButton}
+        key="2"
+      />,
     ]);
   };
 
