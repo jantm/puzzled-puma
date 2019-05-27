@@ -8,6 +8,9 @@ const color = {
   silverChalice: '#aaa',
   gray: '#888',
   doveGray: '#666',
+
+  // greens:
+  conifer: '#bada55',
 };
 
 export default color;

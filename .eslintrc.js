@@ -33,6 +33,9 @@ module.exports = {
             }
         ],
 
+        // Allow to reassign param properties:
+        'no-param-reassign': ['error', { props: false }],
+
         // Semicolon:
         semi: 'off',
         '@typescript-eslint/semi': ['error'],

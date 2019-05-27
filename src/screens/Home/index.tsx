@@ -19,6 +19,12 @@ const Home: NavigationScreenComponent = ({ navigation }: NavigationScreenProps<a
         title="Morse"
         key="1"
       />,
+      <MenuButton
+        onPress={() => navigate('Semaphore')}
+        title="Semaphore"
+        style={homeStyle.menuButton}
+        key="2"
+      />,
     ]);
   };
 
