@@ -1,21 +1,40 @@
 module.exports = {
-    "extends": "airbnb",
-    "parser": "babel-eslint",
-    "env": {
-        "node": true,
-        "browser": true,
-        "es6": true,
-    },
-    "plugins": [
-        "react",
-        "jsx-a11y",
-        "import"
+    extends: [
+        'airbnb-typescript',
+        'plugin:import/typescript',
     ],
-    "rules": {
-        "react/jsx-filename-extension": [ 1,
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: 'module',
+        ecmaFeatures: {
+            jsx: true,
+        },
+        project: './tsconfig.json',
+        tsconfigRootDir: '.',
+    },
+    env: {
+        node: true,
+        browser: true,
+        es6: true,
+    },
+    plugins: [
+        'react',
+        'jsx-a11y',
+        'import',
+        'typescript',
+        '@typescript-eslint',
+    ],
+    rules: {
+        // File types to be checked:
+        'react/jsx-filename-extension': [ 1,
             {
-                "extensions": [ ".js", ".jsx" ],
+                extensions: [ '.js', '.jsx', '.tsx', '.ts' ],
             }
-        ]
+        ],
+
+        // Semicolon:
+        semi: 'off',
+        '@typescript-eslint/semi': ['error'],
     },
 };
