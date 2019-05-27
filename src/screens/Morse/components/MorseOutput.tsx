@@ -1,15 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Text } from 'react-native';
 import morseStyle from '../morse.style';
 
+type Props = {
+  output: string,
+};
 
-const MorseOutput = ({ output }) => (
+const MorseOutput = ({ output }: Props) => (
   <Text style={morseStyle.output}>{output}</Text>
 );
-
-MorseOutput.propTypes = {
-  output: PropTypes.string.isRequired,
-};
 
 export default MorseOutput;

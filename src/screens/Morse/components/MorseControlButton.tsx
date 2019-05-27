@@ -1,21 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Text, TouchableOpacity } from 'react-native';
 import morseStyle from '../morse.style';
+import EventFunction from '../../../types/eventFunction';
 
 
-const MorseControlButton = ({ onPress, title }) => (
+type Props = {
+  onPress: EventFunction,
+  title: string,
+};
+
+const MorseControlButton = ({ onPress, title }: Props) => (
   <TouchableOpacity
     style={morseStyle.controlButton}
     onPress={onPress}
   >
-    <Text style={morseStyle.confirmButtonText}>{title}</Text>
+    <Text>{title}</Text>
   </TouchableOpacity>
 );
-
-MorseControlButton.propTypes = {
-  onPress: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-};
 
 export default MorseControlButton;

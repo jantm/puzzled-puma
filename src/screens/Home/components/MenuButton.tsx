@@ -1,9 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Text, TouchableOpacity } from 'react-native';
 import homeStyle from '../home.style';
+import EventFunction from '../../../types/eventFunction';
 
-const MenuButton = ({ onPress, title }) => (
+
+type MenuButtonProps = {
+  onPress: EventFunction,
+  title: string,
+};
+
+const MenuButton = ({ onPress, title }: MenuButtonProps) => (
   <TouchableOpacity
     style={homeStyle.menuButton}
     onPress={onPress}
@@ -11,10 +17,5 @@ const MenuButton = ({ onPress, title }) => (
     <Text style={homeStyle.menuButtonText}>{title}</Text>
   </TouchableOpacity>
 );
-
-MenuButton.propTypes = {
-  onPress: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-};
 
 export default MenuButton;

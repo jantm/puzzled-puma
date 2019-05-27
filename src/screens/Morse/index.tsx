@@ -9,19 +9,27 @@ import { lettersToMorse } from './morse.data';
 
 const morseDictionary = getMorseDictionary(lettersToMorse);
 
-export default class Morse extends React.Component {
+type Props = null;
+
+type State = {
+  output: string,
+  currentMorse: string,
+  currentLetter: string
+};
+
+export default class Morse extends React.Component<Props, State> {
   static navigationOptions = {
     title: 'Morse',
   };
 
-  constructor(props) {
-    super(props);
+  state: Readonly<State> = {
+    output: '', // decoded text
+    currentMorse: '', // current morse sign
+    currentLetter: '',
+  };
 
-    this.state = {
-      output: '', // decoded text
-      currentMorse: '', // current morse sign
-      currentLetter: '',
-    };
+  constructor(props: Props) {
+    super(props);
 
     this.onLetterConfirm = this.onLetterConfirm.bind(this);
     this.onUndo = this.onUndo.bind(this);
@@ -53,7 +61,7 @@ export default class Morse extends React.Component {
     this.setState({ output, currentMorse, currentLetter });
   }
 
-  onInputButtonPress(input) {
+  onInputButtonPress(input: string) {
     let { currentMorse, currentLetter } = this.state;
     currentMorse = `${currentMorse}${input}`;
 

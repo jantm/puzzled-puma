@@ -1,3 +1,5 @@
+import Dictionary from '../types/dictionary';
+
 /* eslint-disable import/prefer-default-export */
 
 /**
@@ -5,9 +7,9 @@
  * @param {Object} object
  * @return {Object}
  */
-export const objectInvert = object => Object.keys(object)
+export const dictionaryInvert = (dict: Dictionary): Dictionary => Object.keys(dict)
   .reduce((obj, key) => Object.assign(
     {},
     obj,
-    { [object[key]]: key },
+    { [dict[key]]: key },
   ), {});

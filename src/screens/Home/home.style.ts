@@ -7,6 +7,7 @@ import {
 import color from '../../style/color';
 import { fontSize, fontFamily } from '../../style/typography';
 
+
 export default StyleSheet.create({
   container: {
     flex: 1,

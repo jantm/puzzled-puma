@@ -1,14 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import MorseControlButton from './MorseControlButton';
 import MorseInputButton from './MorseInputButton';
 import morseStyle from '../morse.style';
 import { INPUT_BUTTONS } from '../morse.constants';
+import EventFunction from '../../../types/eventFunction';
 
 const { DASH, DOT } = INPUT_BUTTONS;
 
-const MorseInputButtons = ({ onInput, onConfirm, onUndo }) => {
+type Props = {
+  onInput: EventFunction,
+  onConfirm: EventFunction,
+  onUndo: EventFunction,
+};
+
+const MorseButtons = ({ onInput, onConfirm, onUndo }: Props) => {
   const onDotPress = () => onInput(DOT);
   const onDashPress = () => onInput(DASH);
 
@@ -54,10 +60,5 @@ const MorseInputButtons = ({ onInput, onConfirm, onUndo }) => {
   );
 };
 
-MorseInputButtons.propTypes = {
-  onInput: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired,
-  onUndo: PropTypes.func.isRequired,
-};
 
-export default MorseInputButtons;
+export default MorseButtons;

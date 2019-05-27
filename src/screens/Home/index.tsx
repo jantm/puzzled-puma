@@ -1,10 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { View, ScrollView } from 'react-native';
+import {
+  NavigationScreenProps,
+  NavigationScreenComponent,
+} from 'react-navigation';
 import MenuButton from './components/MenuButton';
 import homeStyle from './home.style';
 
-const Home = ({ navigation }) => {
+
+const Home: NavigationScreenComponent = ({ navigation }: NavigationScreenProps<any>) => {
   const renderButtons = () => {
     const { navigate } = navigation;
 
@@ -12,7 +17,6 @@ const Home = ({ navigation }) => {
       <MenuButton
         onPress={() => navigate('Morse')}
         title="Morse"
-        style={homeStyle.menuButton}
         key="1"
       />,
     ]);
@@ -31,10 +35,10 @@ Home.navigationOptions = () => ({
   headerTitle: 'Home',
 });
 
-Home.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }).isRequired,
-};
+// Home.propTypes = {
+//   navigation: PropTypes.shape({
+//     navigate: PropTypes.func,
+//   }).isRequired,
+// };
 
 export default Home;
