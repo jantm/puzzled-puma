@@ -22,7 +22,6 @@ const Home: NavigationScreenComponent = ({ navigation }: NavigationScreenProps<a
       <MenuButton
         onPress={() => navigate('Semaphore')}
         title="Semaphore"
-        style={homeStyle.menuButton}
         key="2"
       />,
     ]);

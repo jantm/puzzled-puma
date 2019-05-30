@@ -1,11 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { View } from 'react-native';
 import SemaphoreButton from './SemaphoreButton';
 import semaphoreStyle from '../semaphore.style';
+import EventFunction from '../../../types/eventFunction';
 
 
-const SemaphoreControls = ({ onUndo, onReset }) => (
+type Props = {
+  onUndo: EventFunction,
+  onReset: EventFunction,
+};
+
+const SemaphoreControls = ({ onUndo, onReset }: Props) => (
   <View style={semaphoreStyle.controlsContainer}>
     <SemaphoreButton
       title="Reset"
@@ -17,10 +22,5 @@ const SemaphoreControls = ({ onUndo, onReset }) => (
     />
   </View>
 );
-
-SemaphoreControls.propTypes = {
-  onUndo: PropTypes.func.isRequired,
-  onReset: PropTypes.func.isRequired,
-};
 
 export default SemaphoreControls;

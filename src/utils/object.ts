@@ -1,12 +1,7 @@
+/* eslint-disable import/prefer-default-export */
 import Dictionary from '../types/dictionary';
 
-/* eslint-disable import/prefer-default-export */
-
-/**
- * Replace key-value pairs
- * @param {Object} object
- * @return {Object}
- */
+// Replace key-value pairs
 export const dictionaryInvert = (dict: Dictionary): Dictionary => Object.keys(dict)
   .reduce((obj, key) => Object.assign(
     {},

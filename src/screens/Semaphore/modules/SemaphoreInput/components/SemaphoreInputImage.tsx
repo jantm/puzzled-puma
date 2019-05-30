@@ -1,22 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import SemaphoreInputImageDots from './SemaphoreInputImageDots';
 import SemaphoreInputCurrentLine from './SemaphoreInputCurrentLine';
 import SemaphoreInputSavedLine from './SemaphoreInputSavedLine';
-import { PATTERN_INPUT_VIEWBOX } from '../semaphoreInput.settings';
 import semaphoreInputStyle from '../semaphoreInput.style';
 import { Svg } from '../../../../../components/Svg';
-import point from '../../../../../types/point';
+import Point from '../../../../../types/point';
 
-const {
-  arrayOf, func, number, object,
-} = PropTypes;
-
+type Props = {
+  dots: Array<Point>,
+  dotNodes: Array<any>,
+  centerDotIndex: number,
+  pattern: Array<Point>,
+  mappedDotsIndex: Array<Point>,
+  activeDotCoordinate: Point | null,
+  node: SVGLineElement,
+};
 
 const SemaphoreInputImage = ({
-  dots, dotNodes, centerDotIndex, pattern, mappedDotsIndex, activeDotCoordinate, node,
-}) => (
-  <Svg style={semaphoreInputStyle.patternInput} viewbox={PATTERN_INPUT_VIEWBOX}>
+  dots,
+  dotNodes,
+  centerDotIndex,
+  pattern,
+  mappedDotsIndex,
+  activeDotCoordinate,
+  node,
+}: Props) => (
+  <Svg style={semaphoreInputStyle.patternInput}>
     <SemaphoreInputCurrentLine
       pattern={pattern}
       mappedDotsIndex={mappedDotsIndex}
@@ -33,19 +42,5 @@ const SemaphoreInputImage = ({
     />
   </Svg>
 );
-
-SemaphoreInputImage.propTypes = {
-  dots: arrayOf(point).isRequired,
-  dotNodes: arrayOf(object).isRequired,
-  centerDotIndex: number.isRequired,
-  pattern: arrayOf(point).isRequired,
-  mappedDotsIndex: arrayOf(point).isRequired,
-  activeDotCoordinate: point,
-  node: func.isRequired,
-};
-
-SemaphoreInputImage.defaultProps = {
-  activeDotCoordinate: null,
-};
 
 export default SemaphoreInputImage;

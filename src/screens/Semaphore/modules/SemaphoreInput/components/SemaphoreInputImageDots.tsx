@@ -1,13 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { DOTS, CENTER_DOT } from '../semaphoreInput.settings';
 import { SvgGroup, SvgCircle } from '../../../../../components/Svg';
-import point from '../../../../../types/point';
+import Point from '../../../../../types/point';
 
-const { arrayOf, number, object } = PropTypes;
+type Props = {
+  dots: Array<Point>,
+  dotNodes: Array<SVGCircleElement>,
+  centerDotIndex: number,
+};
 
-
-const SemaphoreInputImageDots = ({ dots, dotNodes, centerDotIndex }) => (
+const SemaphoreInputImageDots = ({
+  dots,
+  dotNodes,
+  centerDotIndex,
+}: Props) => (
   <SvgGroup>
     {dots.map(({ x, y }, i) => {
       const dotSettings = i === centerDotIndex ? CENTER_DOT : DOTS;
@@ -24,17 +30,12 @@ const SemaphoreInputImageDots = ({ dots, dotNodes, centerDotIndex }) => (
           strokeWidth={STROKE_WIDTH}
           strokeDasharray={STROKE_DASHARRAY}
           key={`${x}${y}`}
-          node={(circle) => { dotNodes[i] = circle; }}
+          node={(circle: SVGCircleElement) => { dotNodes[i] = circle; }}
         />
       );
     })}
   </SvgGroup>
 );
 
-SemaphoreInputImageDots.propTypes = {
-  dots: arrayOf(point).isRequired,
-  dotNodes: arrayOf(object).isRequired,
-  centerDotIndex: number.isRequired,
-};
 
 export default SemaphoreInputImageDots;

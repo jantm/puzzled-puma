@@ -1,56 +1,68 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Animated, PanResponder } from 'react-native';
+import { Animated, PanResponder, PanResponderInstance } from 'react-native';
 import {
-  getDotIndex, getDotsOnCircle, isDotInPattern, populateDotsCoordinate, snapDot,
+  getDotIndex, getDotsOnCircle, isDotInPattern, populateDotsCoordinate,
 } from './semaphoreInput.helpers';
 import semaphoreInputStyle from './semaphoreInput.style';
 import { getArrayWithoutItem } from '../../../../utils/array';
 import SemaphoreInputImage from './components/SemaphoreInputImage';
-import { DOTS, PATTERN_INPUT, CENTER_DOT } from './semaphoreInput.settings';
+import { PATTERN_INPUT } from './semaphoreInput.settings';
+import EventFunction from '../../../../types/eventFunction';
+import SetStateCallback from '../../../../types/setStateCallback';
+import Point from '../../../../types/point';
+
+const {
+  CENTER, RADIUS, ANGLE_STEP, ANGLE_OFFSET,
+} = PATTERN_INPUT;
 
 const getInitialState = () => ({
   initialGestureCoordinate: null,
   activeDotCoordinate: null,
-  pattern: [],
-  indexPattern: [],
-  showError: false,
+  pattern: [] as Array<Point>,
+  indexPattern: [] as Array<number>,
   step: 0,
 });
 
+type Props = {
+  onPattern: EventFunction,
+};
+type State = {
+  initialGestureCoordinate: Point | null,
+  activeDotCoordinate: Point | null,
+  pattern: Array<Point>,
+  indexPattern: Array<number>,
+  step: number,
+};
 
-export default class SemaphorePatternInput extends React.Component {
-  constructor(props) {
+export default class SemaphorePatternInput extends React.Component<Props, State> {
+  state: Readonly<State> = getInitialState();
+
+  dots: Array<Point>;
+
+  centerDotIndex: number;
+
+  mappedDotsIndex: Array<Point>;
+
+  dotNodes: Array<SVGCircleElement>;
+
+  panResponder: PanResponderInstance;
+
+  activeLine!: SVGElement;
+
+
+  constructor(props: Props) {
     super(props);
 
     this.state = getInitialState();
 
-    const {
-      CENTER, RADIUS, ANGLE_STEP, ANGLE_OFFSET, WIDTH, HEIGHT,
-    } = PATTERN_INPUT;
     this.dots = getDotsOnCircle(CENTER, RADIUS, ANGLE_STEP, ANGLE_OFFSET);
 
     this.dots.push(CENTER);
 
     this.centerDotIndex = this.dots.length - 1;
 
-    this.mappedDotsIndex = populateDotsCoordinate(3, WIDTH, HEIGHT);
+    this.mappedDotsIndex = populateDotsCoordinate(3);
     this.dotNodes = [];
-
-
-    this.snapAnimatedValues = this.dots.map((dot, index) => {
-      const animatedValue = new Animated.Value(DOTS.RADIUS);
-
-      animatedValue.addListener(({ value }) => {
-        const dotNode = this.dotNodes[index];
-        if (dotNode) {
-          dotNode.setNativeProps({ r: value.toString() });
-        }
-      });
-
-      return animatedValue;
-    });
-
 
     const defFuncTrue = () => true;
 
@@ -60,16 +72,9 @@ export default class SemaphorePatternInput extends React.Component {
       onMoveShouldSetPanResponder: defFuncTrue,
       onMoveShouldSetPanResponderCapture: defFuncTrue,
 
-      onPanResponderGrant: (e) => {
+      onPanResponderGrant: e => {
         const { locationX, locationY } = e.nativeEvent;
         const { step } = this.state;
-
-        let patternState = {
-          activeDotCoordinate: null,
-          initialGestureCoordinate: null,
-          pattern: [],
-          indexPattern: [],
-        };
 
         const activeDotIndex = getDotIndex(
           { x: locationX, y: locationY },
@@ -83,15 +88,17 @@ export default class SemaphorePatternInput extends React.Component {
         if (activeDotIndex != null) {
           const activeDotCoordinate = this.dots[activeDotIndex];
           const firstDot = this.mappedDotsIndex[activeDotIndex];
-          patternState = {
-            activeDotCoordinate,
+
+          const patternState = {
             initialGestureCoordinate: activeDotCoordinate,
+            activeDotCoordinate,
             pattern: [firstDot],
             indexPattern: [activeDotIndex],
             step: step + 1,
           };
+
+          this.setState(patternState);
         }
-        this.setState(patternState);
       },
 
       onPanResponderMove: (e, gestureState) => {
@@ -132,24 +139,14 @@ export default class SemaphorePatternInput extends React.Component {
           pattern.push(newMatch);
           indexPattern.push(matchedDotIndex);
 
-          const animateIndexes = [matchedDotIndex];
-
           this.setState({
             pattern,
             indexPattern,
             activeDotCoordinate: this.dots[matchedDotIndex],
             step: step + 1,
-          },
-          () => {
-            if (animateIndexes.length) {
-              animateIndexes.forEach((index) => {
-                const config = index === this.centerDotIndex ? CENTER_DOT : DOTS;
-                snapDot(this.snapAnimatedValues[index], config);
-              });
-            }
           });
-        } else if (this.activeLine) {
-          this.activeLine.setNativeProps({
+        } else if (this.activeLine!) {
+          this.activeLine!.setNativeProps({
             x2: endGestureX.toString(),
             y2: endGestureY.toString(),
           });
@@ -168,7 +165,7 @@ export default class SemaphorePatternInput extends React.Component {
     });
   }
 
-  allowedInThisStep(dotIndex) {
+  allowedInThisStep(dotIndex: number) {
     const isCenterDot = dotIndex === this.centerDotIndex;
     const { step } = this.state;
 
@@ -176,7 +173,7 @@ export default class SemaphorePatternInput extends React.Component {
       || (step === 2 && !isCenterDot);
   }
 
-  resetState(onResolve) {
+  resetState(onResolve?: SetStateCallback) {
     this.setState(getInitialState(), onResolve);
   }
 
@@ -188,11 +185,9 @@ export default class SemaphorePatternInput extends React.Component {
     this.resetState(() => onPattern(patternWithoutCenter));
   }
 
-  renderPatternImage(node) {
+  renderPatternImage(node: SVGElement) {
     const {
-      initialGestureCoordinate,
       pattern,
-      showError,
       activeDotCoordinate,
     } = this.state;
 
@@ -200,12 +195,9 @@ export default class SemaphorePatternInput extends React.Component {
       dots: this.dots,
       dotNodes: this.dotNodes,
       centerDotIndex: this.centerDotIndex,
-      initialGestureCoordinate,
       pattern,
-      showError,
       activeDotCoordinate,
       mappedDotsIndex: this.mappedDotsIndex,
-      activeLine: this.activeLine,
       node,
     };
 
@@ -220,12 +212,8 @@ export default class SemaphorePatternInput extends React.Component {
         {...this.panResponder.panHandlers}
         style={semaphoreInputStyle.patternInputContainer}
       >
-        {this.renderPatternImage((node) => { this.activeLine = node; })}
+        {this.renderPatternImage((node: SVGElement) => { this.activeLine! = node; })}
       </Animated.View>
     );
   }
 }
-
-SemaphorePatternInput.propTypes = {
-  onPattern: PropTypes.func.isRequired,
-};

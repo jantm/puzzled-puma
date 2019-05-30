@@ -21,7 +21,6 @@ const MorseInputButton = ({ onPress, type }: Props) => {
       break;
     case DASH:
       buttonSymbolStyle = { ...symbolStyle, ...dashSymbol };
-      // buttonSymbolStyle.push(dashSymbol);
       break;
     default:
       buttonSymbolStyle = symbolStyle;

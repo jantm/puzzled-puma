@@ -1,11 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { SvgLine } from '../../../../../components/Svg';
 import { LINE } from '../semaphoreInput.settings';
-import point from '../../../../../types/point';
+import Point from '../../../../../types/point';
 
+type Props = {
+  activeDotCoordinate: Point | null,
+  node: SVGLineElement,
+};
 
-const SemaphoreInputSavedLine = ({ activeDotCoordinate, node }) => {
+const SemaphoreInputSavedLine = ({ activeDotCoordinate, node }: Props) => {
   if (!activeDotCoordinate) {
     return null;
   }
@@ -20,15 +23,6 @@ const SemaphoreInputSavedLine = ({ activeDotCoordinate, node }) => {
       lineCap={LINE.LINECAP}
     />
   );
-};
-
-SemaphoreInputSavedLine.propTypes = {
-  activeDotCoordinate: point,
-  node: PropTypes.func.isRequired,
-};
-
-SemaphoreInputSavedLine.defaultProps = {
-  activeDotCoordinate: null,
 };
 
 export default SemaphoreInputSavedLine;

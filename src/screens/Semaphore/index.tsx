@@ -9,25 +9,29 @@ import { lettersToSemaphore } from './semaphore.data';
 
 const dictionary = getSemaphoreDictionary(lettersToSemaphore);
 
+type Props = null;
+type State = {
+  text: string,
+};
 
-export default class Semaphore extends React.Component {
+export default class Semaphore extends React.Component<Props, State> {
   static navigationOptions = {
     title: 'Semaphore',
   };
 
-  constructor(props) {
-    super(props);
+  state: Readonly<State> = {
+    text: '',
+  };
 
-    this.state = {
-      text: '',
-    };
+  constructor(props: Props) {
+    super(props);
 
     this.translate = this.translate.bind(this);
     this.reset = this.reset.bind(this);
     this.undo = this.undo.bind(this);
   }
 
-  translate(indexPattern) {
+  translate(indexPattern: Array<string>) {
     let { text } = this.state;
     const codeKey = getCodeKeyFromPattern(indexPattern);
     const newLetter = patternToLetter(codeKey, dictionary);

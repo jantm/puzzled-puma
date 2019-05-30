@@ -1,11 +1,18 @@
 import { Animated } from 'react-native';
 import { DOTS } from './semaphoreInput.settings';
 import { deg2rad } from '../../../../utils/math';
+import Point from '../../../../types/point';
+import { DotConfig } from './semaphoreInput.type';
 
 
 // Get coordinates of dots plced on a circle, based on the circle's center,
 // radius and angle step that defines the dot placement
-export const getDotsOnCircle = (center, radius, angleStep, angleOffset) => {
+export const getDotsOnCircle = (
+  center: Point,
+  radius: number,
+  angleStep: number,
+  angleOffset: number,
+) => {
   const { cos, round, sin } = Math;
   const offsetRad = deg2rad(angleOffset);
   const dots = [];
@@ -22,7 +29,11 @@ export const getDotsOnCircle = (center, radius, angleStep, angleOffset) => {
 };
 
 
-const isWithinSlop = (coords, targetCoords, hitSlop) => {
+const isWithinSlop = (
+  coords: Point,
+  targetCoords: Point,
+  hitSlop: number,
+) => {
   const withinX = (coords.x + hitSlop >= targetCoords.x)
                && (coords.x - hitSlop <= targetCoords.x);
   const withinY = (coords.y + hitSlop >= targetCoords.y)
@@ -31,7 +42,11 @@ const isWithinSlop = (coords, targetCoords, hitSlop) => {
   return withinX && withinY;
 };
 
-export const getDotIndex = (gestureCoordinate, dots, hitSlop = DOTS.HIT_SLOP) => {
+export const getDotIndex = (
+  gestureCoordinate: Point,
+  dots: Array<Point>,
+  hitSlop = DOTS.HIT_SLOP,
+): number | undefined => {
   let dotIndex;
 
   for (let i = 0; i < dots.length; i += 1) {
@@ -45,7 +60,7 @@ export const getDotIndex = (gestureCoordinate, dots, hitSlop = DOTS.HIT_SLOP) =>
 };
 
 
-export const populateDotsCoordinate = (dotsDimension) => {
+export const populateDotsCoordinate = (dotsDimension: number): Array<Point> => {
   const mappedIndex = [];
 
   for (let rowIndex = 0; rowIndex < dotsDimension; rowIndex += 1) {
@@ -58,7 +73,7 @@ export const populateDotsCoordinate = (dotsDimension) => {
 };
 
 
-export const getPointKey = (point, defaultKey = 'point') => {
+export const getPointKey = (point: Point, defaultKey = 'point') => {
   let key = defaultKey;
 
   if (typeof point.x !== 'undefined'
@@ -69,7 +84,7 @@ export const getPointKey = (point, defaultKey = 'point') => {
   return key;
 };
 
-export const getLineKey = (start, end, defaultKey = 'line') => {
+export const getLineKey = (start: Point, end: Point, defaultKey = 'line') => {
   let key = defaultKey;
 
   key += getPointKey(start, '');
@@ -78,7 +93,7 @@ export const getLineKey = (start, end, defaultKey = 'line') => {
   return key;
 };
 
-export const snapDot = (animatedValue: Animated.Value, dotConfig) => {
+export const snapDot = (animatedValue: Animated.Value, dotConfig: DotConfig) => {
   const { SNAP_RADIUS, SNAP_DURATION, RADIUS } = dotConfig;
 
   Animated.sequence([
@@ -93,6 +108,6 @@ export const snapDot = (animatedValue: Animated.Value, dotConfig) => {
   ]).start();
 };
 
-export const isDotInPattern = ({ x, y }, pattern) => (
-  !!pattern.find(dot => (dot.x === x && dot.y === y))
+export const isDotInPattern = ({ x, y }: Point, pattern: Array<Point>) => (
+  !!pattern.find((dot: Point) => (dot.x === x && dot.y === y))
 );

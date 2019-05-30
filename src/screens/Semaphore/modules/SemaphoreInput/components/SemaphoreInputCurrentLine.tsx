@@ -1,14 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { SvgGroup, SvgLine } from '../../../../../components/Svg';
 import { LINE } from '../semaphoreInput.settings';
 import { getLineKey } from '../semaphoreInput.helpers';
-import point from '../../../../../types/point';
+import Point from '../../../../../types/point';
 
-const { arrayOf } = PropTypes;
+type Props = {
+  pattern: Array<Point>,
+  mappedDotsIndex: Array<Point>,
+  dots: Array<Point>,
+};
 
-
-const SemaphoreInputCurrentLine = ({ pattern, mappedDotsIndex, dots }) => (
+const SemaphoreInputCurrentLine = ({ pattern, mappedDotsIndex, dots }: Props) => (
   <SvgGroup>
     {pattern.map((startCoordinate, index) => {
       if (index === pattern.length - 1) {
@@ -44,11 +46,5 @@ const SemaphoreInputCurrentLine = ({ pattern, mappedDotsIndex, dots }) => (
     })}
   </SvgGroup>
 );
-
-SemaphoreInputCurrentLine.propTypes = {
-  pattern: arrayOf(point).isRequired,
-  mappedDotsIndex: arrayOf(point).isRequired,
-  dots: arrayOf(point).isRequired,
-};
 
 export default SemaphoreInputCurrentLine;

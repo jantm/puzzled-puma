@@ -1,5 +1,6 @@
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import color from '../../../../style/color';
+import { LINECAP } from '../../../../constants/svg.constants';
 
 export const PATTERN_INPUT = {
   CENTER: {
@@ -15,7 +16,7 @@ export const PATTERN_INPUT = {
 
 export const PATTERN_INPUT_VIEWBOX = [
   0, 0, PATTERN_INPUT.WIDTH, PATTERN_INPUT.HEIGHT,
-];
+].join(',');
 
 export const DOTS = {
   FILL_COLOR: color.white,
@@ -31,7 +32,7 @@ export const DOTS = {
 export const LINE = {
   COLOR: color.conifer,
   WIDTH: 5,
-  LINECAP: 'round',
+  LINECAP: LINECAP.ROUND,
 };
 
 export const CENTER_DOT = Object.assign({}, DOTS, {
@@ -41,6 +42,6 @@ export const CENTER_DOT = Object.assign({}, DOTS, {
   SNAP_RADIUS: wp('2.1%'),
   SNAP_DURATION: 50,
   STROKE_WIDTH: 0,
-  STROKE_COLOR: '',
-  STROKE_DASHARRAY: 0,
+  STROKE_COLOR: '#fff',
+  STROKE_DASHARRAY: '0',
 });
