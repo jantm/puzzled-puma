@@ -4,7 +4,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "eslint": "./node_modules/.bin/eslint --ext .ts,.tsx ./src",
+    "eslint:fix": "./node_modules/.bin/eslint --fix --ext .ts,.tsx ./src"
   },
   "dependencies": {
     "expo": "^32.0.0",
