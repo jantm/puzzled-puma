@@ -1,15 +1,16 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Line } from 'react-native-svg';
-import Point from '../../types/point';
+import Point from '../../../types/point';
+import { LINECAP } from '../../../constants/svg.constants';
 
 type Props = {
   start: Point,
   end: Point,
-  node?: SVGLineElement,
   strokeColor: string,
   strokeWidth: number | string,
-  lineCap: string,
+  node?: SVGLineElement,
+  lineCap?: string,
 };
 
 const SvgLine = ({
@@ -18,7 +19,7 @@ const SvgLine = ({
   node,
   strokeColor,
   strokeWidth,
-  lineCap,
+  lineCap = LINECAP.ROUND,
 }: Props) => {
   let svgLineProps = {
     x1: start.x,

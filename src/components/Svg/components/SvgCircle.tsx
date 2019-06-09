@@ -1,8 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Circle } from 'react-native-svg';
-import Point from '../../types/point';
-
+import Point from '../../../types/point';
 
 type Props = {
   center: Point,
