@@ -47,7 +47,7 @@ export default class SemaphorePatternInput extends React.Component<Props, State>
 
   panResponder: PanResponderInstance;
 
-  activeLine!: SVGElement;
+  activeLine!: any;
 
 
   constructor(props: Props) {
@@ -185,7 +185,7 @@ export default class SemaphorePatternInput extends React.Component<Props, State>
     this.resetState(() => onPattern(patternWithoutCenter));
   }
 
-  renderPatternImage(node: SVGElement) {
+  renderPatternImage(node: any) {
     const {
       pattern,
       activeDotCoordinate,
@@ -212,7 +212,7 @@ export default class SemaphorePatternInput extends React.Component<Props, State>
         {...this.panResponder.panHandlers}
         style={semaphoreInputStyle.patternInputContainer}
       >
-        {this.renderPatternImage((node: SVGElement) => { this.activeLine! = node; })}
+        {this.renderPatternImage((node: any) => { this.activeLine! = node; })}
       </Animated.View>
     );
   }
